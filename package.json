@@ -2,16 +2,17 @@
   "name": "alfa-one-project",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "Server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node Server.js",
+    "dev": "nodemon Server.js"
   },
   "author": "Rohan",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "express": "^4.19.2",
     "mongoose": "^8.4.0"
   }

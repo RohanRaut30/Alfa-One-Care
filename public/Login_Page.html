@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+   <link rel="stylesheet" href="Assets/css/SignUp_Login_page.css"> 
+   
+</head>
+<style>
+   img.background {
+   position: absolute;
+   left: 0px;
+   top: 0px;
+   z-index: -1;
+   width: 100%;
+   height: 100%;
+   -webkit-filter: blur(5px); 
+   filter: blur(5px);
+   }
+   h1{
+      color: rgb(122, 196, 48);
+   }
+   .foot{
+      color: white;
+   }
+</style>
+<body>
+   <img class="background" src="Assets/img/eco_transport.jpg" alt="">
+ <container>
+    <div>
+        <div>
+            <h1>Login</h1>
+            <h4>Welcome to our :- Alfa One Care Services</h4>
+            <form action="/login" method="POST">
+             <div>
+                <p><label for="email">Email Address</label></p>
+                <input type="email" id="email" placeholder="Email" required name="email" width="48" height="48">
+             </div>
+             <div>
+                <p><label for="password">Password</label></p>
+                <input type="password" id="password" placeholder="Password" required name="password" width="48" height="48" >
+             </div>
+             <button type="submit" id="btn">Login</button>
+            <div class="foot"> 
+               <h6>Or Connect With - </h6>
+               <div><i>Twitter</i></div>
+               <div><i>LinkedIn</i></div>
+               <div><i>Instagram</i></i></div>
+            </div>
+        </div>  
+    </div>
+    </container>
+</body>
+</html>

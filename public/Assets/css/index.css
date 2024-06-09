@@ -1,0 +1,42 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+ body{
+    background-repeat: no-repeat;
+    background:#e6e6ff;
+    font-family: 'Encode Sans', sans-serif;
+ }
+ html {
+    position: relative;
+    min-height: 100%;
+    }
+    body {
+    margin: 0 0 100px; 
+    font-family: sans-serif;
+    }
+    .content { 
+    padding: 15px; 
+    box-sizing: border-box;
+    text-align: center;
+    }
+    footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    color:#FFFFFF; 
+    background: #06303A;
+    font-size:1.5em;
+    text-align: center;
+    line-height:100px;
+    }
+    .navbar {
+      width: 100%;
+      background-color: #555;
+      overflow: auto;
+    }
+    

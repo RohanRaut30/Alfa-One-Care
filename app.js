@@ -2,8 +2,7 @@ const express = require('express');
 const mongoose =require('mongoose');
 const path = require('path');
 const app = express();
-const port = 3000;
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcryptjs");
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -13,11 +12,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/myapp', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+
+require("./server/database/conn")
+app.use(express.urlencoded({ extended: true })); // To parse URL-encoded data
+app.use(express.static(path.join(__dirname, 'public')));
+const Register = require('./server/models/registers');
+
+app.use(express.static('public'));
+
 
 // Define the User model
 const userSchema = new mongoose.Schema({
@@ -31,44 +33,53 @@ const User = mongoose.model('User', userSchema);
 // Middleware
 app.use(express.json());
 
-app.post('/api/register', async (req, res) => {
-  const { username, email, password } = req.body;
+// SignUp code
+app.post("/sign_up", async(req,res)=> {
+  try{
+     const password = req.body.password;
+     const ConfirmPassword = req.body.ConfirmPassword;
+     if(password === ConfirmPassword){
+        const registerusers = new Register({
+           name: req.body.name,
+           email: req.body.email,
+           password: password,
+           ConfirmPassword: ConfirmPassword
+         })
+         console.log("saved ")
 
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
+        const registered = await registerusers.save();
+        res.status(201).sendFile(__dirname + '/public/SignUp_Page.html');
+        
+     }else{
+        res.send("Invalid Password")
+     }
 
-  // Create a new user
-  const user = new User({ username, email, password: hashedPassword });
-  await user.save();
+  }catch(error) {
+     res.status(400).send(error);
+  }
+})
 
-  res.json({ message: 'Welcome! You have successfully registered.' });
-});
+app.post("/login", async(req,res)=> {
+  try{
+       const email = req.body.email;
+       const password = req.body.password;
+       const useremail = await Register.findOne({email:email});
 
-app.post('/api/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  // Find the user by email
-  const user = await User.findOne({ email });
-
-  if (!user) {
-    res.status(401).json({ message: 'Invalid email or password.' });
-    return;
+     const isMatch =await bcrypt.compare(password,useremail.password); 
+       if(isMatch){
+           res.status(201).sendFile(__dirname + '/public/');
+        }else{
+           res.send("Invalid Password");          
+        }    
+  } catch(error){
+     res.status(400).send("invalid Login Details")
   }
 
-   // Compare the passwords
-   const isValid = await bcrypt.compare(password, user.password);
+})
 
-   if (!isValid) {
-     res.status(401).json({ message: 'Invalid email or password.' });
-     return;
-   }
- 
-   res.json({ message: 'Welcome! You have successfully logged in.' });
- });
- 
 
 // Start the server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port http://localhost:${PORT}`);
 });
